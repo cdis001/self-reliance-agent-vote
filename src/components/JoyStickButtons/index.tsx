@@ -54,13 +54,13 @@ const ButtonStyle = styled.div`
   }
   @media (min-width: 400px) {
     & {
-      margin: 0 1vw;
+      margin: 0 15px;
       & > .joy-head {
         background-color: red;
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        margin-bottom: -1vh;
+        margin-bottom: -2px;
         z-index: 6;
       }
       & > .joy-body {
@@ -81,15 +81,15 @@ const ButtonStyle = styled.div`
         border-radius: 4px 4px 0 0;
       }
     }
-    .color-red {
-      background-color: red;
-    }
-    .color-gold {
-      background-color: gold;
-    }
-    .color-blueviolet {
-      background-color: blueviolet;
-    }
+  }
+  .color-red {
+    background-color: red;
+  }
+  .color-gold {
+    background-color: gold;
+  }
+  .color-blueviolet {
+    background-color: blueviolet;
   }
 `;
 

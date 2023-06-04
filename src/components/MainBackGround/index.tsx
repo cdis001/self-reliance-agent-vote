@@ -11,15 +11,14 @@ const MainBackGroundStyle = styled.div`
   background-image: url("${backgroundImg}");
   background-position: center;
   background-size: cover;
-  width: 90%;
-  height: 90vh;
+  aspect-ratio: 19 / 31;
+  height: 90%;
   border-radius: 10px;
   border: 10px solid #ddd;
   padding: 20px 0;
   margin: auto;
   @media (min-width: 400px) {
     & {
-      height: auto;
       aspect-ratio: 19 / 31;
     }
   }

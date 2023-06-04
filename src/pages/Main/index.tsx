@@ -39,7 +39,7 @@ const GameStartBtn = styled.button`
 
 function MainPage() {
   return (
-    <div>
+    <main>
       <MainBackGround>
         <MainTitle>
           <h2>성남시청소년자립지원관</h2>
@@ -51,7 +51,7 @@ function MainPage() {
         </GameStartBtn>
       </MainBackGround>
       <JoyStickButtons />
-    </div>
+    </main>
   );
 }
 
