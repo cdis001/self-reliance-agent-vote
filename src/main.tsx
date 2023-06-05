@@ -1,15 +1,20 @@
-import React, { StrictMode } from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 import MainPage from "./pages/Main";
+import CharacterSettings from "./pages/CharacterSettings";
 import "./index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/self-reliance-agent-vote",
     element: <MainPage />,
+  },
+  {
+    path: "/self-reliance-agent-vote/characterSettings",
+    element: <CharacterSettings />,
   },
 ]);
 

@@ -31,13 +31,25 @@ const MainTitle = styled.div`
 `;
 const GameStartBtn = styled.button`
   font-family: "DungGeunMo";
-  color: gold;
   margin-top: 50px;
   font-size: 1.6em;
   letter-spacing: 0.05em;
+
+  & > span {
+    color: #fff;
+  }
+
+  & > .selected {
+    text-shadow: 1px 1px #333;
+    visibility: visible;
+    color: gold;
+  }
 `;
 
 function MainPage() {
+  const [startHover, setStartHover] = useState(false);
+
+  const navigate = useNavigate();
   return (
     <main>
       <MainBackGround>
@@ -46,8 +58,14 @@ function MainPage() {
           <h1 className="firstHalf">상반기</h1>
           <h1 className="group">자조모임</h1>
         </MainTitle>
-        <GameStartBtn>
-          <span>►</span> GAME START!
+        <GameStartBtn
+          onMouseEnter={() => setStartHover(true)}
+          onMouseLeave={() => setStartHover(false)}
+          onClick={() =>
+            navigate("/self-reliance-agent-vote/characterSettings")
+          }
+        >
+          <span className={startHover ? "selected" : ""}>GAME START!</span>
         </GameStartBtn>
       </MainBackGround>
       <JoyStickButtons />
