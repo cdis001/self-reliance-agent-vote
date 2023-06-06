@@ -5,6 +5,7 @@ import { RecoilRoot } from "recoil";
 
 import MainPage from "./pages/Main";
 import CharacterSettings from "./pages/CharacterSettings";
+import Ending from "./pages/Ending";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/self-reliance-agent-vote/characterSettings",
     element: <CharacterSettings />,
+  },
+  {
+    path: "/self-reliance-agent-vote/ending",
+    element: <Ending />,
   },
 ]);
 
