@@ -5,6 +5,7 @@ import styled from "styled-components";
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
 import CharacterStatComponents from "../../components/CharacterStatComponents";
+import SubmitButton from "../../components/SubmitButton";
 
 const CharacterImg = styled.div`
   width: 150px;
@@ -50,6 +51,9 @@ const MoveButtonList = styled.div`
     color: #000;
     // box-shadow: 1px 1px #333;
   }
+  .nonvisible {
+    visibility: hidden;
+  }
 `;
 
 const MoveButton = styled.button`
@@ -59,34 +63,27 @@ const MoveButton = styled.button`
   border-radius: 10%;
   color: #fff;
   z-index: 12;
+  visibility: visible;
 `;
-
-const CharacterStatList = [
-  {
-    title: "바보력",
-    value: 10,
-  },
-  {
-    title: "호구력",
-    value: 10,
-  },
-  {
-    title: "재력",
-    value: 0,
-  },
-  //   {
-  //     title: "사격실력",
-  //     value: 10,
-  //   },
-  //   {
-  //     title: "독재력",
-  //     value: 10,
-  //   },
-];
 
 function CharacterSettings() {
   const [prevHover, setPrevHover] = useState(false);
   const [nextHover, setNextHover] = useState(false);
+  const [isCommit, setIsCommit] = useState(false);
+  const [characterStatLists, setCharacterStatLists] = useState([
+    {
+      title: "바보력",
+      value: 10,
+    },
+    {
+      title: "호구력",
+      value: 10,
+    },
+    {
+      title: "재력",
+      value: 0,
+    },
+  ]);
   const navigate = useNavigate();
   return (
     <main>
@@ -95,15 +92,40 @@ function CharacterSettings() {
         <CharacterName>김한송</CharacterName>
         <CharacterPosition>요원</CharacterPosition>
         <CharacterStatBox>
-          {CharacterStatList.map((data, index) => (
-            <CharacterStatComponents key={index} {...data} />
-          ))}
+          {characterStatLists.map((data, index) =>
+            data.title === "제출하기" ? (
+              <SubmitButton key={index} {...data} />
+            ) : (
+              <CharacterStatComponents key={index} {...data} />
+            )
+          )}
         </CharacterStatBox>
         <MoveButtonList>
           <MoveButton
             onMouseEnter={() => setPrevHover(true)}
             onMouseLeave={() => setPrevHover(false)}
-            onClick={() => navigate("/self-reliance-agent-vote")}
+            onClick={() => {
+              if (isCommit) {
+                const newCharacterStatLists = [
+                  {
+                    title: "바보력",
+                    value: 10,
+                  },
+                  {
+                    title: "호구력",
+                    value: 10,
+                  },
+                  {
+                    title: "재력",
+                    value: 0,
+                  },
+                ];
+                setCharacterStatLists(newCharacterStatLists);
+                setIsCommit(false);
+              } else {
+                navigate("/self-reliance-agent-vote/selectCharcter");
+              }
+            }}
             className={prevHover ? "selected" : ""}
           >
             이전
@@ -111,7 +133,20 @@ function CharacterSettings() {
           <MoveButton
             onMouseEnter={() => setNextHover(true)}
             onMouseLeave={() => setNextHover(false)}
-            className={nextHover ? "selected" : ""}
+            className={`${nextHover ? "selected" : ""} ${
+              isCommit ? " nonvisible" : ""
+            }`}
+            onClick={() => {
+              if (!isCommit) {
+                const newCharacterStatLists = [
+                  { title: "사격실력", value: 10 },
+                  { title: "독재력", value: 10 },
+                  { title: "제출하기", value: 0 },
+                ];
+                setCharacterStatLists(newCharacterStatLists);
+                setIsCommit(true);
+              }
+            }}
           >
             다음
           </MoveButton>

@@ -62,9 +62,7 @@ function MainPage() {
         <GameStartBtn
           onMouseEnter={() => setStartHover(true)}
           onMouseLeave={() => setStartHover(false)}
-          onClick={() =>
-            navigate("/self-reliance-agent-vote/characterSettings")
-          }
+          onClick={() => navigate("/self-reliance-agent-vote/selectCharcter")}
         >
           <span className={startHover ? "selected" : ""}>GAME START!</span>
         </GameStartBtn>
