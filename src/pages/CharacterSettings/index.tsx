@@ -7,12 +7,18 @@ import JoyStickButtons from "../../components/JoyStickButtons";
 import CharacterStatComponents from "../../components/CharacterStatComponents";
 import SubmitButton from "../../components/SubmitButton";
 
+import Agent1 from "../../assets/agent1.jpeg";
+import Agent2 from "../../assets/agent2.jpeg";
+import Agent3 from "../../assets/agent3.jpeg";
+import Agent4 from "../../assets/agent4.jpeg";
+
 const CharacterImg = styled.div`
   width: 150px;
   height: 150px;
   border: 5px dashed #333;
   border-radius: 50%;
-  background-color: #ccc;
+  background-image: url("${Agent4}");
+  background-size: cover;
   margin-bottom: 15px;
 `;
 

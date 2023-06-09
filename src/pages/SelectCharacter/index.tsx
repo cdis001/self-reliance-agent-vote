@@ -5,8 +5,10 @@ import styled from "styled-components";
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
 
-import Animals1 from "../../assets/animals1.jpeg";
-// import Animals2 from "../../assets/animals2.jpeg";
+import Agent1 from "../../assets/agent1.jpeg";
+import Agent2 from "../../assets/agent2.jpeg";
+import Agent3 from "../../assets/agent3.jpeg";
+import Agent4 from "../../assets/agent4.jpeg";
 
 const MainTitle = styled.div`
   font-family: "DungGeunMo";
@@ -35,30 +37,64 @@ const SelectCharacterBox = styled.div`
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
 
-  //   & > button:hover {
-  //     border: solid;
-  //     width: 41vw;
-  //     height: 41vw;
-  //   }
-  .fox {
-    background-image: url("${Animals1}");
-    background-position: 6% 6%;
-    background-size: 300%;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
   }
-  .deer {
-    background-image: url("${Animals1}");
-    background-position: 50% 6%;
-    background-size: 300%;
+  & > div > button {
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
   }
-  .bunny {
-    background-image: url("${Animals1}");
-    background-position: 94% 6%;
-    background-size: 300%;
+
+  & > div > span {
+    color: gold;
+    // color: blue;
+    // color: #2a3492;
+    // text-shadow: -1px 0 blue, 0 1px blue, 1px 0 blue, 0 -1px blue;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 2em;
+    line-height: initial;
+    position: absolute;
+    top: 40%;
+    z-index: 1;
   }
-  .wolf {
-    background-image: url("${Animals1}");
-    background-position: 50% 94%;
-    background-size: 300%;
+
+  & > div > button:hover {
+    text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold;
+  }
+
+  & > div > button:disabled {
+    text-shadow: none;
+    filter: opacity(0.5) drop-shadow(0 0 0 #ccc);
+    cursor: default;
+  }
+
+  .agent1 {
+    background-image: url("${Agent1}");
+    background-position: 65% -35%;
+    background-size: 120%;
+  }
+  .agent2 {
+    background-image: url("${Agent2}");
+    background-position: 50% -40%;
+    background-size: 130%;
+  }
+  .agent3 {
+    background-image: url("${Agent3}");
+    background-position: 65% 15%;
+    background-size: 130%;
+  }
+  .agent4 {
+    background-image: url("${Agent4}");
+    background-size: cover;
   }
 
   @media (min-width: 400px) {
@@ -78,30 +114,52 @@ function SelectCharacter() {
           <h2>요원을 선택해주세요!</h2>
         </MainTitle>
         <SelectCharacterBox>
-          <button
-            onClick={() => {
-              navigate("/self-reliance-agent-vote/characterSettings");
-            }}
-            className={"fox"}
-          />
-          <button
-            onClick={() => {
-              navigate("/self-reliance-agent-vote/characterSettings");
-            }}
-            className={"deer"}
-          />
-          <button
-            onClick={() => {
-              navigate("/self-reliance-agent-vote/characterSettings");
-            }}
-            className={"bunny"}
-          />
-          <button
-            onClick={() => {
-              navigate("/self-reliance-agent-vote/characterSettings");
-            }}
-            className={"wolf"}
-          />
+          <div>
+            <span>CLEAR!</span>
+            <button
+              onClick={() => {
+                navigate("/self-reliance-agent-vote/characterSettings");
+              }}
+              className={"agent1"}
+              disabled={true}
+            >
+              팀장님
+            </button>
+          </div>
+          <div>
+            <span>CLEAR!</span>
+            <button
+              onClick={() => {
+                navigate("/self-reliance-agent-vote/characterSettings");
+              }}
+              className={"agent2"}
+              disabled={true}
+            >
+              변일수
+            </button>
+          </div>
+          <div>
+            <span>CLEAR!</span>
+            <button
+              onClick={() => {
+                navigate("/self-reliance-agent-vote/characterSettings");
+              }}
+              className={"agent3"}
+              disabled={true}
+            >
+              김은선
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                navigate("/self-reliance-agent-vote/characterSettings");
+              }}
+              className={"agent4"}
+            >
+              김한송
+            </button>
+          </div>
         </SelectCharacterBox>
       </MainBackGround>
       <JoyStickButtons />
