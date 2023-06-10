@@ -123,7 +123,7 @@ function SelectCharacter() {
               className={"agent1"}
               disabled={true}
             >
-              팀장님
+              전창현
             </button>
           </div>
           <div>

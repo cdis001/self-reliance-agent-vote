@@ -17,6 +17,12 @@ const MainTitle = styled.div`
     font-size: 1.1em;
     letter-spacing: 0.1em;
   }
+  & > h2 > span {
+    text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold;
+    color: #000;
+    font-size: 1.1em;
+    letter-spacing: 0.1em;
+  }
   & > h1 {
     font-size: 3em;
     letter-spacing: 0.1em;
@@ -56,7 +62,12 @@ function Ending() {
       <MainBackGround>
         <MainTitle>
           <h1>THE END</h1>
-          <h2>6월 17일에 만나요</h2>
+          <h2>
+            <span>6월 29일 7시</span>에
+          </h2>
+          <h2>
+            <span>자립지원관</span>에서 만나요
+          </h2>
         </MainTitle>
         <Slime />
       </MainBackGround>
