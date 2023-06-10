@@ -1,5 +1,10 @@
-import { FormEvent } from "react";
-import { useState } from "react";
+import {
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+  useState,
+  useEffect,
+} from "react";
 import styled from "styled-components";
 
 const CharacterStatComponentsStyle = styled.div`
@@ -42,14 +47,26 @@ const CharacterStatValue = styled.input`
   margin-left: 2vw;
 `;
 
-interface CharacterStatComponentsProps {
+type CharacterStatsType = {
+  id: number;
   title: string;
   value: number;
+};
+
+interface CharacterStatComponentsProps {
+  id: number;
+  title: string;
+  value: number;
+  characterStats: CharacterStatsType[];
+  setCharacterStats: Dispatch<SetStateAction<CharacterStatsType[]>>;
 }
 
 const CharacterStatComponents = ({
+  id,
   title,
   value,
+  characterStats,
+  setCharacterStats,
 }: CharacterStatComponentsProps) => {
   const [statValue, setStatValue] = useState(value);
   const valueArray = Array.from(
@@ -60,6 +77,9 @@ const CharacterStatComponents = ({
     { length: 10 - statValue },
     (_: any, i: number) => statValue + 1 + i
   );
+  useEffect(() => {
+    setStatValue(value);
+  }, [title]);
 
   return (
     <CharacterStatComponentsStyle>
@@ -73,10 +93,11 @@ const CharacterStatComponents = ({
           onChange={(e: FormEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
             const targetValue = parseInt(target.value);
-            console.log(targetValue);
             if (isNaN(targetValue)) {
               setStatValue(0);
             } else {
+              characterStats[id - 1] = { id, title, value: targetValue };
+              setCharacterStats(characterStats);
               setStatValue(targetValue);
             }
           }}
@@ -88,7 +109,11 @@ const CharacterStatComponents = ({
               <button
                 key={`${title}-${data}`}
                 className={"existValueButton"}
-                onClick={() => setStatValue(data)}
+                onClick={() => {
+                  characterStats[id - 1] = { id, title, value: data };
+                  setCharacterStats(characterStats);
+                  setStatValue(data);
+                }}
               />
             ))
           : null}
@@ -97,7 +122,11 @@ const CharacterStatComponents = ({
               <button
                 key={`${title}-${data}`}
                 className={"nonExistValueButton"}
-                onClick={() => setStatValue(data)}
+                onClick={() => {
+                  characterStats[id - 1] = { id, title, value: data };
+                  setCharacterStats(characterStats);
+                  setStatValue(data);
+                }}
               />
             ))
           : null}

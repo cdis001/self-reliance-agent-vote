@@ -7,9 +7,9 @@ import JoyStickButtons from "../../components/JoyStickButtons";
 import CharacterStatComponents from "../../components/CharacterStatComponents";
 import SubmitButton from "../../components/SubmitButton";
 
-import Agent1 from "../../assets/agent1.jpeg";
-import Agent2 from "../../assets/agent2.jpeg";
-import Agent3 from "../../assets/agent3.jpeg";
+// import Agent1 from "../../assets/agent1.jpeg";
+// import Agent2 from "../../assets/agent2.jpeg";
+// import Agent3 from "../../assets/agent3.jpeg";
 import Agent4 from "../../assets/agent4.jpeg";
 
 const CharacterImg = styled.div`
@@ -72,25 +72,49 @@ const MoveButton = styled.button`
   visibility: visible;
 `;
 
+const characterStatLists1 = [
+  {
+    id: 1,
+    title: "집착",
+    value: 0,
+  },
+  {
+    id: 2,
+    title: "꼰대력",
+    value: 0,
+  },
+  {
+    id: 3,
+    title: "귀여움",
+    value: 0,
+  },
+];
+
+const characterStatLists2 = [
+  {
+    id: 1,
+    title: "공감능력",
+    value: 0,
+  },
+  {
+    id: 2,
+    title: "자립지식",
+    value: 0,
+  },
+  {
+    id: 3,
+    title: "문제해결",
+    value: 0,
+  },
+];
+
 function CharacterSettings() {
   const [prevHover, setPrevHover] = useState(false);
   const [nextHover, setNextHover] = useState(false);
   const [isCommit, setIsCommit] = useState(false);
-  const [characterStatLists, setCharacterStatLists] = useState([
-    {
-      title: "바보력",
-      value: 10,
-    },
-    {
-      title: "호구력",
-      value: 10,
-    },
-    {
-      title: "재력",
-      value: 0,
-    },
-  ]);
+  const [characterStats, setCharacterStats] = useState(characterStatLists1);
   const navigate = useNavigate();
+
   return (
     <main>
       <MainBackGround>
@@ -98,11 +122,16 @@ function CharacterSettings() {
         <CharacterName>김한송</CharacterName>
         <CharacterPosition>요원</CharacterPosition>
         <CharacterStatBox>
-          {characterStatLists.map((data, index) =>
+          {characterStats.map((data, index) =>
             data.title === "제출하기" ? (
               <SubmitButton key={index} {...data} />
             ) : (
-              <CharacterStatComponents key={index} {...data} />
+              <CharacterStatComponents
+                key={index}
+                {...data}
+                characterStats={characterStats}
+                setCharacterStats={setCharacterStats}
+              />
             )
           )}
         </CharacterStatBox>
@@ -112,22 +141,8 @@ function CharacterSettings() {
             onMouseLeave={() => setPrevHover(false)}
             onClick={() => {
               if (isCommit) {
-                const newCharacterStatLists = [
-                  {
-                    title: "바보력",
-                    value: 10,
-                  },
-                  {
-                    title: "호구력",
-                    value: 10,
-                  },
-                  {
-                    title: "재력",
-                    value: 0,
-                  },
-                ];
-                setCharacterStatLists(newCharacterStatLists);
                 setIsCommit(false);
+                setCharacterStats(characterStatLists1);
               } else {
                 navigate("/self-reliance-agent-vote/selectCharcter");
               }
@@ -139,22 +154,19 @@ function CharacterSettings() {
           <MoveButton
             onMouseEnter={() => setNextHover(true)}
             onMouseLeave={() => setNextHover(false)}
-            className={`${nextHover ? "selected" : ""} ${
-              isCommit ? " nonvisible" : ""
-            }`}
+            className={`${nextHover ? "selected" : ""}
+            `}
+            // ${isCommit ? " nonvisible" : ""}
             onClick={() => {
               if (!isCommit) {
-                const newCharacterStatLists = [
-                  { title: "사격실력", value: 10 },
-                  { title: "독재력", value: 10 },
-                  { title: "제출하기", value: 0 },
-                ];
-                setCharacterStatLists(newCharacterStatLists);
                 setIsCommit(true);
+                setCharacterStats(characterStatLists2);
+              } else {
+                navigate("/self-reliance-agent-vote/ending");
               }
             }}
           >
-            다음
+            {isCommit ? "제출하기" : "다음"}
           </MoveButton>
         </MoveButtonList>
       </MainBackGround>
