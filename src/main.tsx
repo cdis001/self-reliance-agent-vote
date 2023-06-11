@@ -7,6 +7,7 @@ import MainPage from "./pages/Main";
 import CharacterSettings from "./pages/CharacterSettings";
 import Ending from "./pages/Ending";
 import SelectCharacter from "./pages/SelectCharacter";
+import Hidden from "./pages/Hidden";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/self-reliance-agent-vote/ending",
     element: <Ending />,
+  },
+  {
+    path: "/self-reliance-agent-vote/hidden",
+    element: <Hidden />,
   },
 ]);
 

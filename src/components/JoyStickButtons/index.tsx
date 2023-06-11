@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const JoyStickButtonsStyle = styled.div`
@@ -10,16 +12,25 @@ const JoyStickButtonsStyle = styled.div`
   right: 0;
 `;
 
-const ButtonStyle = styled.div`
+const ButtonStyle = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 10;
   margin: 0 1vw;
+  position: relative;
+  &:active:not(:last-child) > .button-head {
+    visibility: hidden;
+    height: 0;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+  }
   & > .joy-head {
     background-color: red;
     width: 10vw;
     height: 10vw;
+    border: 0;
     border-radius: 50%;
     margin-bottom: -1vh;
     // position: relative;
@@ -44,6 +55,7 @@ const ButtonStyle = styled.div`
     width: 15vw;
     height: 1vh;
     border-radius: 4px 4px 0 0;
+    transition: all 0.1s ease-in-out;
   }
   & > .button-body {
     background-color: #fff;
@@ -93,21 +105,51 @@ const ButtonStyle = styled.div`
 `;
 
 const JoyStickButtons = () => {
+  const [redBtn, setRedBtn] = useState(0);
+  const [goldBtn, setGoldBtn] = useState(0);
+  const [blueBtn, setBlueBtn] = useState(0);
+  const [goToEvent, setGoToEvent] = useState(0);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (goToEvent === 5) {
+      navigate("/self-reliance-agent-vote/hidden");
+    } else if (redBtn === 3 && goldBtn === 0 && blueBtn === 0) {
+      setGoToEvent(1);
+    } else if (redBtn === 3 && goldBtn === 0 && blueBtn === 2) {
+      setGoToEvent(2);
+    } else if (redBtn === 3 && goldBtn === 1 && blueBtn === 2) {
+      setGoToEvent(3);
+    } else if (redBtn === 3 && goldBtn === 1 && blueBtn === 3) {
+      setGoToEvent(4);
+    } else if (redBtn === 3 && goldBtn === 3 && blueBtn === 3) {
+      setGoToEvent(5);
+    }
+  }, [redBtn, goldBtn, blueBtn, goToEvent]);
+
   return (
     <JoyStickButtonsStyle>
-      <ButtonStyle>
-        <button className="button-head color-red"></button>
-        <button className="button-body"></button>
+      <ButtonStyle onClick={() => setRedBtn(redBtn + 1)}>
+        <div className="button-head color-red"></div>
+        <div className="button-body"></div>
       </ButtonStyle>
-      <ButtonStyle>
-        <button className="button-head color-gold"></button>
-        <button className="button-body"></button>
+      <ButtonStyle onClick={() => setGoldBtn(goldBtn + 1)}>
+        <div className="button-head color-gold"></div>
+        <div className="button-body"></div>
       </ButtonStyle>
-      <ButtonStyle>
-        <button className="button-head color-blueviolet"></button>
-        <button className="button-body"></button>
+      <ButtonStyle onClick={() => setBlueBtn(blueBtn + 1)}>
+        <div className="button-head color-blueviolet"></div>
+        <div className="button-body"></div>
       </ButtonStyle>
-      <ButtonStyle>
+      <ButtonStyle
+        onClick={() => {
+          setRedBtn(0);
+          setGoldBtn(0);
+          setBlueBtn(0);
+          setGoToEvent(0);
+        }}
+      >
         <div className="joy-head">{/* <div /> */}</div>
         <div className="joy-body"></div>
         <div className="button-head"></div>
