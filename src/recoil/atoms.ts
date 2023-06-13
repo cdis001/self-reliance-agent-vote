@@ -5,38 +5,50 @@ import { Character, Stat } from "interfaces";
 
 const { persistAtom } = recoilPersist();
 
-export const statState = atom<Stat[]>({
-  key: "statState",
-  default: [],
+export const characterListState = atom<Character[]>({
+  key: "characterListState",
+  default: [
+    { id: 1, name: "전창현", isCommited: false, statList: [] },
+    { id: 2, name: "변일수", isCommited: false, statList: [] },
+    { id: 3, name: "김은선", isCommited: false, statList: [] },
+    { id: 4, name: "김한송", isCommited: false, statList: [] },
+  ],
   effects_UNSTABLE: [persistAtom],
 });
 
-export const statFilterState = atom({
-  key: "statFilterState",
-  default: "ALL",
-});
-
-export const statsSelector = selector<Stat[]>({
-  key: "statsSelector",
-  get: ({ get }) => {
-    const stats = get(statState);
-    const filter = get(statFilterState);
-
-    //   switch (filter) {
-    //     case "ALL":
-    //       return toDoLists;
-    //     case "COMPLETED":
-    //       return toDoLists.filter((data) => data.completed);
-    //     case "UNCOMPLETED":
-    //       return toDoLists.filter((data) => !data.completed);
-
-    //     default:
-    //       return toDoLists;
-    //   }
-
-    //   return toDoLists;
-  },
-  // set: ({ set }, newToDo) => {
-  //   set(toDoListState, newToDo);
-  // },
+export const statListState = atom<Stat[]>({
+  key: "statListState",
+  default: [
+    {
+      id: 1,
+      title: "집착",
+      value: 0,
+    },
+    {
+      id: 2,
+      title: "꼰대력",
+      value: 0,
+    },
+    {
+      id: 3,
+      title: "귀여움",
+      value: 0,
+    },
+    {
+      id: 4,
+      title: "공감능력",
+      value: 0,
+    },
+    {
+      id: 5,
+      title: "자립지식",
+      value: 0,
+    },
+    {
+      id: 6,
+      title: "문제해결",
+      value: 0,
+    },
+  ],
+  effects_UNSTABLE: [persistAtom],
 });

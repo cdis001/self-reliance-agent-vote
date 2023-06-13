@@ -1,24 +1,20 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
+
+import { characterListState, statListState } from "../../recoil/atoms";
 
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
 import CharacterStatComponents from "../../components/CharacterStatComponents";
-import SubmitButton from "../../components/SubmitButton";
-
-// import Agent1 from "../../assets/agent1.jpeg";
-// import Agent2 from "../../assets/agent2.jpeg";
-// import Agent3 from "../../assets/agent3.jpeg";
-import Agent4 from "../../assets/agent4.jpeg";
+// import SubmitButton from "../../components/SubmitButton";
 
 const CharacterImg = styled.div`
   width: 150px;
   height: 150px;
   border: 5px dashed #333;
   border-radius: 50%;
-  background-image: url("${Agent4}");
-  background-size: cover;
   margin-bottom: 15px;
 `;
 
@@ -72,68 +68,50 @@ const MoveButton = styled.button`
   visibility: visible;
 `;
 
-const characterStatLists1 = [
-  {
-    id: 1,
-    title: "집착",
-    value: 0,
-  },
-  {
-    id: 2,
-    title: "꼰대력",
-    value: 0,
-  },
-  {
-    id: 3,
-    title: "귀여움",
-    value: 0,
-  },
-];
-
-const characterStatLists2 = [
-  {
-    id: 1,
-    title: "공감능력",
-    value: 0,
-  },
-  {
-    id: 2,
-    title: "자립지식",
-    value: 0,
-  },
-  {
-    id: 3,
-    title: "문제해결",
-    value: 0,
-  },
-];
-
 function CharacterSettings() {
   const [prevHover, setPrevHover] = useState(false);
   const [nextHover, setNextHover] = useState(false);
   const [isCommit, setIsCommit] = useState(false);
-  const [characterStats, setCharacterStats] = useState(characterStatLists1);
+  const statList = useRecoilValue(statListState);
+  const characterList = useRecoilValue(characterListState);
+  const setCharacterListState = useSetRecoilState(characterListState);
+  const resetStatList = useResetRecoilState(statListState);
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { id: userId, name } = location.state;
+
+  useEffect(() => {
+    // console.log(statList);
+  }, [statList]);
 
   return (
     <main>
       <MainBackGround>
-        <CharacterImg />
-        <CharacterName>김한송</CharacterName>
+        <CharacterImg className={`agent${userId}`} />
+        <CharacterName>{name}</CharacterName>
         <CharacterPosition>요원</CharacterPosition>
         <CharacterStatBox>
-          {characterStats.map((data, index) =>
-            data.title === "제출하기" ? (
-              <SubmitButton key={index} {...data} />
-            ) : (
-              <CharacterStatComponents
-                key={index}
-                {...data}
-                characterStats={characterStats}
-                setCharacterStats={setCharacterStats}
-              />
-            )
-          )}
+          {isCommit
+            ? statList
+                .slice(3, 6)
+                .map((data, index) => (
+                  <CharacterStatComponents
+                    key={index}
+                    {...data}
+                    statList={statList}
+                  />
+                ))
+            : statList
+                .slice(0, 3)
+                .map((data, index) => (
+                  <CharacterStatComponents
+                    key={index}
+                    {...data}
+                    statList={statList}
+                  />
+                ))}
         </CharacterStatBox>
         <MoveButtonList>
           <MoveButton
@@ -142,7 +120,6 @@ function CharacterSettings() {
             onClick={() => {
               if (isCommit) {
                 setIsCommit(false);
-                setCharacterStats(characterStatLists1);
               } else {
                 navigate("/self-reliance-agent-vote/selectCharcter");
               }
@@ -156,13 +133,28 @@ function CharacterSettings() {
             onMouseLeave={() => setNextHover(false)}
             className={`${nextHover ? "selected" : ""}
             `}
-            // ${isCommit ? " nonvisible" : ""}
             onClick={() => {
               if (!isCommit) {
                 setIsCommit(true);
-                setCharacterStats(characterStatLists2);
               } else {
-                navigate("/self-reliance-agent-vote/ending");
+                const newCharacterList = [...characterList];
+                newCharacterList[userId - 1] = {
+                  id: userId,
+                  name,
+                  isCommited: true,
+                  statList,
+                };
+                setCharacterListState(newCharacterList);
+
+                const commitedAgent = newCharacterList.filter(
+                  (data) => data.isCommited
+                );
+                if (commitedAgent.length === 4) {
+                  navigate("/self-reliance-agent-vote/ending");
+                } else {
+                  resetStatList();
+                  navigate("/self-reliance-agent-vote/selectCharcter");
+                }
               }
             }}
           >

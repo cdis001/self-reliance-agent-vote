@@ -1,14 +1,12 @@
-// import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+
+import { characterListState } from "../../recoil/atoms";
 
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
-
-import Agent1 from "../../assets/agent1.jpeg";
-import Agent2 from "../../assets/agent2.jpeg";
-import Agent3 from "../../assets/agent3.jpeg";
-import Agent4 from "../../assets/agent4.jpeg";
 
 const MainTitle = styled.div`
   font-family: "DungGeunMo";
@@ -77,26 +75,6 @@ const SelectCharacterBox = styled.div`
     cursor: default;
   }
 
-  .agent1 {
-    background-image: url("${Agent1}");
-    background-position: 65% -35%;
-    background-size: 120%;
-  }
-  .agent2 {
-    background-image: url("${Agent2}");
-    background-position: 50% -40%;
-    background-size: 130%;
-  }
-  .agent3 {
-    background-image: url("${Agent3}");
-    background-position: 65% 15%;
-    background-size: 130%;
-  }
-  .agent4 {
-    background-image: url("${Agent4}");
-    background-size: cover;
-  }
-
   @media (min-width: 400px) {
     & {
       width: 320px;
@@ -105,8 +83,32 @@ const SelectCharacterBox = styled.div`
   }
 `;
 
-function SelectCharacter() {
+const CharacterComponents = ({ id, name, isCommited }) => {
   const navigate = useNavigate();
+  return (
+    <div>
+      {isCommited ? <span>CLEAR!</span> : null}
+      <button
+        onClick={() => {
+          navigate("/self-reliance-agent-vote/characterSettings", {
+            state: { id, name },
+          });
+        }}
+        className={`agent${id}`}
+        disabled={isCommited}
+      >
+        {name}
+      </button>
+    </div>
+  );
+};
+
+function SelectCharacter() {
+  const characterList = useRecoilValue(characterListState);
+
+  useEffect(() => {
+    console.log(characterList);
+  }, [characterList]);
   return (
     <main>
       <MainBackGround>
@@ -114,52 +116,9 @@ function SelectCharacter() {
           <h2>요원을 선택해주세요!</h2>
         </MainTitle>
         <SelectCharacterBox>
-          <div>
-            <span>CLEAR!</span>
-            <button
-              onClick={() => {
-                navigate("/self-reliance-agent-vote/characterSettings");
-              }}
-              className={"agent1"}
-              disabled={true}
-            >
-              전창현
-            </button>
-          </div>
-          <div>
-            <span>CLEAR!</span>
-            <button
-              onClick={() => {
-                navigate("/self-reliance-agent-vote/characterSettings");
-              }}
-              className={"agent2"}
-              disabled={true}
-            >
-              변일수
-            </button>
-          </div>
-          <div>
-            <span>CLEAR!</span>
-            <button
-              onClick={() => {
-                navigate("/self-reliance-agent-vote/characterSettings");
-              }}
-              className={"agent3"}
-              disabled={true}
-            >
-              김은선
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                navigate("/self-reliance-agent-vote/characterSettings");
-              }}
-              className={"agent4"}
-            >
-              김한송
-            </button>
-          </div>
+          {characterList.map((data) => (
+            <CharacterComponents key={data.id} {...data} />
+          ))}
         </SelectCharacterBox>
       </MainBackGround>
       <JoyStickButtons />

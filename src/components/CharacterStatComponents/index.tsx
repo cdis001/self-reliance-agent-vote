@@ -1,11 +1,8 @@
-import {
-  FormEvent,
-  Dispatch,
-  SetStateAction,
-  useState,
-  useEffect,
-} from "react";
+import { FormEvent, useState, useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+
+import { statListState } from "../../recoil/atoms";
 
 const CharacterStatComponentsStyle = styled.div`
   width: 100%;
@@ -47,28 +44,21 @@ const CharacterStatValue = styled.input`
   margin-left: 2vw;
 `;
 
-type CharacterStatsType = {
-  id: number;
-  title: string;
-  value: number;
-};
-
 interface CharacterStatComponentsProps {
   id: number;
   title: string;
   value: number;
-  characterStats: CharacterStatsType[];
-  setCharacterStats: Dispatch<SetStateAction<CharacterStatsType[]>>;
 }
 
 const CharacterStatComponents = ({
   id,
   title,
   value,
-  characterStats,
-  setCharacterStats,
 }: CharacterStatComponentsProps) => {
   const [statValue, setStatValue] = useState(value);
+  const statList = useRecoilValue(statListState);
+  const setStatListState = useSetRecoilState(statListState);
+
   const valueArray = Array.from(
     { length: statValue },
     (_: any, i: number) => i + 1
@@ -77,9 +67,10 @@ const CharacterStatComponents = ({
     { length: 10 - statValue },
     (_: any, i: number) => statValue + 1 + i
   );
+
   useEffect(() => {
     setStatValue(value);
-  }, [title]);
+  }, [title, value]);
 
   return (
     <CharacterStatComponentsStyle>
@@ -90,16 +81,11 @@ const CharacterStatComponents = ({
           min={"0"}
           max={"10"}
           value={statValue}
+          disabled={true}
           onChange={(e: FormEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
             const targetValue = parseInt(target.value);
-            if (isNaN(targetValue)) {
-              setStatValue(0);
-            } else {
-              characterStats[id - 1] = { id, title, value: targetValue };
-              setCharacterStats(characterStats);
-              setStatValue(targetValue);
-            }
+            setStatValue(targetValue);
           }}
         />
       </div>
@@ -110,9 +96,9 @@ const CharacterStatComponents = ({
                 key={`${title}-${data}`}
                 className={"existValueButton"}
                 onClick={() => {
-                  characterStats[id - 1] = { id, title, value: data };
-                  setCharacterStats(characterStats);
-                  setStatValue(data);
+                  const newStatList = [...statList];
+                  newStatList[id - 1] = { id, title, value: data };
+                  setStatListState(newStatList);
                 }}
               />
             ))
@@ -123,9 +109,9 @@ const CharacterStatComponents = ({
                 key={`${title}-${data}`}
                 className={"nonExistValueButton"}
                 onClick={() => {
-                  characterStats[id - 1] = { id, title, value: data };
-                  setCharacterStats(characterStats);
-                  setStatValue(data);
+                  const newStatList = [...statList];
+                  newStatList[id - 1] = { id, title, value: data };
+                  setStatListState(newStatList);
                 }}
               />
             ))
