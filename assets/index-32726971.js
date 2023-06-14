@@ -311,7 +311,7 @@ Error generating stack: `+i.message+`
   z-index: 12;
   visibility: visible;
 `;function _L(){const[e,t]=B.useState(!1),[n,r]=B.useState(!1),[o,i]=B.useState(!1),l=Ra(Ca),a=Ra(Mc),s=Cy(Mc),u=Ok(Ca),c=Ga(),f=$d(),{id:h,name:S}=f.state;return B.useEffect(()=>{},[l]),z.jsxs("main",{children:[z.jsxs(Qi,{children:[z.jsx(vL,{className:`agent${h}`}),z.jsx(gL,{children:S}),z.jsx(yL,{children:"요원"}),z.jsx(SL,{children:o?l.slice(3,6).map((m,g)=>z.jsx(Nh,{id:m.id,title:m.title,value:m.value},g)):l.slice(0,3).map((m,g)=>z.jsx(Nh,{id:m.id,title:m.title,value:m.value},g))}),z.jsxs(wL,{children:[z.jsx(Ah,{onMouseEnter:()=>t(!0),onMouseLeave:()=>t(!1),onClick:()=>{o?i(!1):c("/self-reliance-agent-vote/selectCharcter")},className:e?"selected":"",children:"이전"}),z.jsx(Ah,{onMouseEnter:()=>r(!0),onMouseLeave:()=>r(!1),className:`${n?"selected":""}
-            `,onClick:()=>{if(!o)i(!0);else{const m=[...a];m[h-1]={id:h,name:S,isCommited:!0,statList:l};const{status:g}=fL({id:h,statList:l});g===201?(s(m),m.filter(d=>d.isCommited).length===4?c("/self-reliance-agent-vote/ending"):(u(),c("/self-reliance-agent-vote/selectCharcter"))):alert("제출 실패! 김한송 요원에게 전달해주세요")}},children:o?"제출하기":"다음"})]})]}),z.jsx(ys,{})]})}const RL="/self-reliance-agent-vote/assets/slimeSprite2-740f00a9.png",EL=Ve.div`
+            `,onClick:async()=>{if(!o)i(!0);else{const m=[...a];m[h-1]={id:h,name:S,isCommited:!0,statList:l};const{status:g}=await fL({id:h,statList:l});g===201?(s(m),m.filter(d=>d.isCommited).length===4?c("/self-reliance-agent-vote/ending"):(u(),c("/self-reliance-agent-vote/selectCharcter"))):alert("제출 실패! 김한송 요원에게 전달해주세요")}},children:o?"제출하기":"다음"})]})]}),z.jsx(ys,{})]})}const RL="/self-reliance-agent-vote/assets/slimeSprite2-740f00a9.png",EL=Ve.div`
   font-family: "DungGeunMo";
   display: flex;
   align-items: center;
@@ -429,7 +429,7 @@ Error generating stack: `+i.message+`
       height: 320px;
     }
   }
-`,NL=({id:e,name:t,isCommited:n})=>{const r=Ga();return z.jsxs("div",{children:[n?z.jsx("span",{children:"CLEAR!"}):null,z.jsx("button",{onClick:()=>{r("/self-reliance-agent-vote/characterSettings",{state:{id:e,name:t}})},className:`agent${e}`,disabled:n,children:t})]})};function AL(){const e=Ra(Mc);return B.useEffect(()=>{console.log(e)},[e]),z.jsxs("main",{children:[z.jsxs(Qi,{children:[z.jsx(TL,{children:z.jsx("h2",{children:"요원을 선택해주세요!"})}),z.jsx(kL,{children:e.map((t,n)=>z.jsx(NL,{...t},n))})]}),z.jsx(ys,{})]})}const LL=Ve.div`
+`,NL=({id:e,name:t,isCommited:n})=>{const r=Ga();return z.jsxs("div",{children:[n?z.jsx("span",{children:"CLEAR!"}):null,z.jsx("button",{onClick:()=>{r("/self-reliance-agent-vote/characterSettings",{state:{id:e,name:t}})},className:`agent${e}`,disabled:n,children:t})]})};function AL(){const e=Ra(Mc);return B.useEffect(()=>{},[e]),z.jsxs("main",{children:[z.jsxs(Qi,{children:[z.jsx(TL,{children:z.jsx("h2",{children:"요원을 선택해주세요!"})}),z.jsx(kL,{children:e.map((t,n)=>z.jsx(NL,{...t},n))})]}),z.jsx(ys,{})]})}const LL=Ve.div`
   font-family: "DungGeunMo";
   display: flex;
   align-items: center;
