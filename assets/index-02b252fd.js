@@ -106,6 +106,7 @@ Error generating stack: `+i.message+`
   z-index: 10;
   margin: 0 1vw;
   position: relative;
+  padding-top: 15px;
   &:active:not(:last-child) > .button-head {
     visibility: hidden;
     height: 0;
@@ -189,7 +190,7 @@ Error generating stack: `+i.message+`
   .color-blueviolet {
     background-color: blueviolet;
   }
-`,Es=()=>{const[e,t]=z.useState(0),[n,r]=z.useState(0),[o,i]=z.useState(0),[l,a]=z.useState(0),s=No();return z.useEffect(()=>{l===5?s("/self-reliance-agent-vote/hidden"):e===3&&n===0&&o===0?a(1):e===3&&n===0&&o===2?a(2):e===3&&n===1&&o===2?a(3):e===3&&n===1&&o===3?a(4):e===3&&n===3&&o===3&&a(5)},[e,n,o,l]),F.jsxs(YN,{children:[F.jsxs(Al,{onClick:()=>t(e+1),children:[F.jsx("div",{className:"button-head color-red"}),F.jsx("div",{className:"button-body"})]}),F.jsxs(Al,{onClick:()=>r(n+1),children:[F.jsx("div",{className:"button-head color-gold"}),F.jsx("div",{className:"button-body"})]}),F.jsxs(Al,{onClick:()=>i(o+1),children:[F.jsx("div",{className:"button-head color-blueviolet"}),F.jsx("div",{className:"button-body"})]}),F.jsxs(Al,{onClick:()=>{t(0),r(0),i(0),a(0)},children:[F.jsx("div",{className:"joy-head"}),F.jsx("div",{className:"joy-body"}),F.jsx("div",{className:"button-head"}),F.jsx("div",{className:"button-body"})]})]})},qN=Be.div`
+`,Es=()=>{const[e,t]=z.useState(0),[n,r]=z.useState(0),[o,i]=z.useState(0),[l,a]=z.useState(0),s=No();return z.useEffect(()=>{l===5?s("/self-reliance-agent-vote/hidden"):e===3&&n===0&&o===0?a(1):e===3&&n===0&&o===2?a(2):e===3&&n===1&&o===2?a(3):e===3&&n===1&&o===3?a(4):e===3&&n===3&&o===3&&a(5),console.log("redBtn",e),console.log("goldBtn",n),console.log("blueBtn",o),console.log("goToEvent",l)},[e,n,o,l]),F.jsxs(YN,{children:[F.jsxs(Al,{onClick:()=>t(e+1),children:[F.jsx("div",{className:"button-head color-red"}),F.jsx("div",{className:"button-body"})]}),F.jsxs(Al,{onClick:()=>r(n+1),children:[F.jsx("div",{className:"button-head color-gold"}),F.jsx("div",{className:"button-body"})]}),F.jsxs(Al,{onClick:()=>i(o+1),children:[F.jsx("div",{className:"button-head color-blueviolet"}),F.jsx("div",{className:"button-body"})]}),F.jsxs(Al,{onClick:()=>{t(0),r(0),i(0),a(0)},children:[F.jsx("div",{className:"joy-head"}),F.jsx("div",{className:"joy-body"}),F.jsx("div",{className:"button-head"}),F.jsx("div",{className:"button-body"})]})]})},qN=Be.div`
   font-family: "DungGeunMo";
   display: flex;
   align-items: center;
@@ -310,7 +311,7 @@ Error generating stack: `+i.message+`
   color: #fff;
   z-index: 12;
   visibility: visible;
-`;function LL(){const[e,t]=z.useState(!1),[n,r]=z.useState(!1),[o,i]=z.useState(!1),l=Gn(oo),a=Gn($i),s=Gn(Rs),u=ka($i),c=ka(oo),f=bc(oo),h=eA(),y=No(),m=Fd(),{id:g,name:L}=m.state,d=async()=>{const{data:p,status:v}=await _L(g);v===200?c(p):alert(`값을 가져오는데 실패했습니다!
+`;function LL(){const[e,t]=z.useState(!1),[n,r]=z.useState(!1),[o,i]=z.useState(!1),l=Gn(oo),a=Gn($i),s=Gn(Rs),u=ka($i),c=ka(oo),f=bc(oo),h=eA(),y=No(),m=Fd(),{id:g,name:L}=m.state,d=async()=>{const{data:p,status:v}=await _L(g);console.log(p),v===200?c(p):alert(`값을 가져오는데 실패했습니다!
 개발자를 갈궈주세요`)};return z.useEffect(()=>{h.listen(()=>{h.action==="POP"&&f()})},[h]),z.useEffect(()=>{},[l]),z.useEffect(()=>{s&&d()},[]),F.jsxs("main",{children:[F.jsxs(Xi,{children:[F.jsx(CL,{className:`agent${g}`}),F.jsx(TL,{children:L}),F.jsx(kL,{children:"요원"}),F.jsx(NL,{children:o?l.slice(3,6).map((p,v)=>F.jsx(Uh,{id:p.id,title:p.title,value:p.value},v)):l.slice(0,3).map((p,v)=>F.jsx(Uh,{id:p.id,title:p.title,value:p.value},v))}),F.jsxs(AL,{children:[F.jsx(zh,{onMouseEnter:()=>t(!0),onMouseLeave:()=>t(!1),onClick:()=>{o?i(!1):(f(),y("/self-reliance-agent-vote/selectCharcter"))},className:e?"selected":"",children:"이전"}),F.jsx(zh,{onMouseEnter:()=>r(!0),onMouseLeave:()=>r(!1),className:`${n?"selected":""}
             ${s&&o?" nonvisible":""}
             `,onClick:async()=>{if(!o)i(!0);else{const p=[...a];p[g-1]={id:g,name:L,isCommited:!0,statList:l};const{status:v}=await wL({id:g,statList:l});v===201?(u(p),p.filter(x=>x.isCommited).length===4?y("/self-reliance-agent-vote/ending"):(f(),y("/self-reliance-agent-vote/selectCharcter"))):alert("제출 실패! 김한송 요원에게 전달해주세요")}},children:o?"제출하기":"다음"})]})]}),F.jsx(Es,{})]})}const PL="/self-reliance-agent-vote/assets/slimeSprite2-740f00a9.png",bL=Be.div`
