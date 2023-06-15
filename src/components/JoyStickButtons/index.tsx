@@ -19,6 +19,7 @@ const ButtonStyle = styled.button`
   z-index: 10;
   margin: 0 1vw;
   position: relative;
+  padding-top: 15px;
   &:active:not(:last-child) > .button-head {
     visibility: hidden;
     height: 0;
@@ -126,6 +127,10 @@ const JoyStickButtons = () => {
     } else if (redBtn === 3 && goldBtn === 3 && blueBtn === 3) {
       setGoToEvent(5);
     }
+    // console.log("redBtn", redBtn);
+    // console.log("goldBtn", goldBtn);
+    // console.log("blueBtn", blueBtn);
+    // console.log("goToEvent", goToEvent);
   }, [redBtn, goldBtn, blueBtn, goToEvent]);
 
   return (
