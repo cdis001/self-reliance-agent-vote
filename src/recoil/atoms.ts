@@ -1,9 +1,9 @@
-import { atom, selector } from "recoil";
-import { recoilPersist } from "recoil-persist";
+import { atom } from "recoil";
+// import { recoilPersist } from "recoil-persist";
 
-import { Character, Stat } from "interfaces";
+import { Character, Stat } from "../interfaces";
 
-const { persistAtom } = recoilPersist();
+// const { persistAtom } = recoilPersist();
 
 export const characterListState = atom<Character[]>({
   key: "characterListState",
@@ -13,7 +13,7 @@ export const characterListState = atom<Character[]>({
     { id: 3, name: "김은선", isCommited: false, statList: [] },
     { id: 4, name: "김한송", isCommited: false, statList: [] },
   ],
-  effects_UNSTABLE: [persistAtom],
+  // effects_UNSTABLE: [persistAtom],
 });
 
 export const statListState = atom<Stat[]>({
@@ -50,5 +50,5 @@ export const statListState = atom<Stat[]>({
       value: 0,
     },
   ],
-  effects_UNSTABLE: [persistAtom],
+  // effects_UNSTABLE: [persistAtom],
 });
