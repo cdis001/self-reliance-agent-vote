@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
+import { createBrowserHistory } from "history";
 
 import { characterListState, statListState } from "../../recoil/atoms";
 
@@ -77,13 +78,20 @@ function CharacterSettings() {
   const setCharacterListState = useSetRecoilState(characterListState);
   const resetStatList = useResetRecoilState(statListState);
 
+  const history = createBrowserHistory();
   const navigate = useNavigate();
   const location = useLocation();
 
   const { id: userId, name } = location.state;
 
   useEffect(() => {
-    // console.log(statList);
+    history.listen(() => {
+      if (history.action === "POP") resetStatList();
+    });
+  }, [history]);
+
+  useEffect(() => {
+    //
   }, [statList]);
 
   return (
@@ -99,8 +107,9 @@ function CharacterSettings() {
                 .map((data, index) => (
                   <CharacterStatComponents
                     key={index}
-                    {...data}
-                    statList={statList}
+                    id={data.id}
+                    title={data.title}
+                    value={data.value}
                   />
                 ))
             : statList
@@ -121,6 +130,7 @@ function CharacterSettings() {
               if (isCommit) {
                 setIsCommit(false);
               } else {
+                resetStatList();
                 navigate("/self-reliance-agent-vote/selectCharcter");
               }
             }}
