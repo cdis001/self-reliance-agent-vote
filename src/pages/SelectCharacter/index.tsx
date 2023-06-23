@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
-import { characterListState } from "../../recoil/atoms";
+import { characterListState, isAdminState } from "../../recoil/atoms";
 
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
@@ -83,7 +83,17 @@ const SelectCharacterBox = styled.div`
   }
 `;
 
-const CharacterComponents = ({ id, name, isCommited }) => {
+type characterComponentsPorps = {
+  id: number;
+  name: string;
+  isCommited: boolean;
+};
+
+const CharacterComponents = ({
+  id,
+  name,
+  isCommited,
+}: characterComponentsPorps) => {
   const navigate = useNavigate();
   return (
     <div>
@@ -105,9 +115,19 @@ const CharacterComponents = ({ id, name, isCommited }) => {
 
 function SelectCharacter() {
   const characterList = useRecoilValue(characterListState);
+  const isAdmin = useRecoilValue(isAdminState);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const commitedAgent = characterList.filter((data) => data.isCommited);
+
+    if (commitedAgent.length === 4 && !isAdmin) {
+      navigate("/self-reliance-agent-vote/ending");
+    }
+  }, []);
 
   useEffect(() => {
-    console.log(characterList);
+    // console.log(characterList);
   }, [characterList]);
   return (
     <main>
@@ -116,8 +136,8 @@ function SelectCharacter() {
           <h2>요원을 선택해주세요!</h2>
         </MainTitle>
         <SelectCharacterBox>
-          {characterList.map((data) => (
-            <CharacterComponents key={data.id} {...data} />
+          {characterList.map((data, index) => (
+            <CharacterComponents key={index} {...data} />
           ))}
         </SelectCharacterBox>
       </MainBackGround>

@@ -2,7 +2,7 @@ import { FormEvent, useState, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { statListState } from "../../recoil/atoms";
+import { statListState, isAdminState } from "../../recoil/atoms";
 
 const CharacterStatComponentsStyle = styled.div`
   width: 100%;
@@ -57,6 +57,7 @@ const CharacterStatComponents = ({
 }: CharacterStatComponentsProps) => {
   const [statValue, setStatValue] = useState(value);
   const statList = useRecoilValue(statListState);
+  const isAdmin = useRecoilValue(isAdminState);
   const setStatListState = useSetRecoilState(statListState);
 
   const valueArray = Array.from(
@@ -95,6 +96,7 @@ const CharacterStatComponents = ({
               <button
                 key={`${title}-${data}`}
                 className={"existValueButton"}
+                disabled={isAdmin}
                 onClick={() => {
                   const newStatList = [...statList];
                   newStatList[id - 1] = { id, title, value: data };
@@ -108,6 +110,7 @@ const CharacterStatComponents = ({
               <button
                 key={`${title}-${data}`}
                 className={"nonExistValueButton"}
+                disabled={isAdmin}
                 onClick={() => {
                   const newStatList = [...statList];
                   newStatList[id - 1] = { id, title, value: data };

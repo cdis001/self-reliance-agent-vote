@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+
+import { characterListState } from "../../recoil/atoms";
 
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
@@ -49,8 +52,16 @@ const GameStartBtn = styled.button`
 
 function MainPage() {
   const [startHover, setStartHover] = useState(false);
+  const characterList = useRecoilValue(characterListState);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    const commitedAgent = characterList.filter((data) => data.isCommited);
+
+    if (commitedAgent.length === 4) {
+      navigate("/self-reliance-agent-vote/ending");
+    }
+  }, []);
   return (
     <main>
       <MainBackGround>

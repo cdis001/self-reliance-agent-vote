@@ -1,7 +1,14 @@
-import { FormEvent, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { FormEvent, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 
+import {
+  characterListState,
+  statListState,
+  isAdminState,
+} from "../../recoil/atoms";
+import { getCode } from "../../api/code";
 import MainBackGround from "../../components/MainBackGround";
 
 const MainTitle = styled.div`
@@ -70,7 +77,25 @@ const EntryBtn = styled.button`
 
 function Hidden() {
   const [value, setValue] = useState("");
-  //   const navigate = useNavigate();
+  const [code, setCode] = useState("");
+
+  const setIsAdminState = useSetRecoilState(isAdminState);
+  const resetStatList = useResetRecoilState(statListState);
+  const resetCharacterListState = useResetRecoilState(characterListState);
+  const navigate = useNavigate();
+
+  const setCodeValue = async () => {
+    const { data, status }: any = await getCode();
+    if (status === 200) {
+      setCode(data.value);
+    } else {
+      alert("코드를 읽어오는데 실패했습니다!\n개발자를 갈구세요");
+    }
+  };
+
+  useEffect(() => {
+    setCodeValue();
+  }, []);
   return (
     <main>
       <MainBackGround>
@@ -89,6 +114,11 @@ function Hidden() {
           onClick={() => {
             if (value === "김한송바보") {
               alert("당신은 바보입니다!");
+            } else if (value === code) {
+              setIsAdminState(true);
+              resetStatList();
+              resetCharacterListState();
+              navigate("/self-reliance-agent-vote/selectCharcter");
             }
           }}
         >

@@ -52,3 +52,9 @@ export const statListState = atom<Stat[]>({
   ],
   // effects_UNSTABLE: [persistAtom],
 });
+
+export const isAdminState = atom<boolean>({
+  key: "isAdminState",
+  default: false,
+  // effects_UNSTABLE: [persistAtom],
+});
