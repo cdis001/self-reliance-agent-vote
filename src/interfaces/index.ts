@@ -2,14 +2,8 @@ export interface Character {
   id: number;
   name: string;
   isCommited: boolean;
-  statList?: StatType[];
+  statList?: Stat[];
 }
-
-type StatType = {
-  id: number;
-  title: string;
-  value: number;
-};
 
 export interface Stat {
   id: number;
