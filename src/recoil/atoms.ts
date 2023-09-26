@@ -8,10 +8,10 @@ import { Character, Stat } from "../interfaces";
 export const characterListState = atom<Character[]>({
   key: "characterListState",
   default: [
-    { id: 1, name: "전창현", isCommited: false, statList: [] },
-    { id: 2, name: "변일수", isCommited: false, statList: [] },
-    { id: 3, name: "김은선", isCommited: false, statList: [] },
-    { id: 4, name: "김한송", isCommited: false, statList: [] },
+    { id: 1, name: "CAT1", isCommited: false, statList: [] },
+    { id: 2, name: "CAT2", isCommited: false, statList: [] },
+    { id: 3, name: "CAT3", isCommited: false, statList: [] },
+    { id: 4, name: "CAT4", isCommited: false, statList: [] },
   ],
   // effects_UNSTABLE: [persistAtom],
 });
