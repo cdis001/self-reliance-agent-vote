@@ -63,10 +63,10 @@ function Ending() {
         <MainTitle>
           <h1>THE END</h1>
           <h2>
-            <span>6월 29일 7시</span>에
+            <span>MM월 dd일 hh시</span>에
           </h2>
           <h2>
-            <span>자립지원관</span>에서 만나요
+            <span>고양이네</span>에서 만나요
           </h2>
         </MainTitle>
         <Slime />

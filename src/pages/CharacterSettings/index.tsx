@@ -4,12 +4,7 @@ import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import { createBrowserHistory } from "history";
 
-import {
-  characterListState,
-  statListState,
-  isAdminState,
-} from "../../recoil/atoms";
-import { commit, getCharacterStat } from "../../api/stat";
+import { characterListState, statListState } from "../../recoil/atoms";
 
 import MainBackGround from "../../components/MainBackGround";
 import JoyStickButtons from "../../components/JoyStickButtons";
@@ -81,9 +76,7 @@ function CharacterSettings() {
 
   const statList = useRecoilValue(statListState);
   const characterList = useRecoilValue(characterListState);
-  const isAdmin = useRecoilValue(isAdminState);
   const setCharacterListState = useSetRecoilState(characterListState);
-  const setStatList = useSetRecoilState(statListState);
   const resetStatList = useResetRecoilState(statListState);
 
   const history = createBrowserHistory();
@@ -91,16 +84,6 @@ function CharacterSettings() {
   const location = useLocation();
 
   const { id: userId, name } = location.state;
-
-  const getStat = async () => {
-    const { data, status }: any = await getCharacterStat(userId);
-
-    if (status === 200) {
-      setStatList(data);
-    } else {
-      alert("값을 가져오는데 실패했습니다!\n개발자를 갈궈주세요");
-    }
-  };
 
   useEffect(() => {
     history.listen(() => {
@@ -111,12 +94,6 @@ function CharacterSettings() {
   useEffect(() => {
     //
   }, [statList]);
-
-  useEffect(() => {
-    if (isAdmin) {
-      getStat();
-    }
-  }, []);
 
   return (
     <main>
@@ -167,7 +144,6 @@ function CharacterSettings() {
             onMouseEnter={() => setNextHover(true)}
             onMouseLeave={() => setNextHover(false)}
             className={`${nextHover ? "selected" : ""}
-            ${isAdmin && isCommit ? " nonvisible" : ""}
             `}
             onClick={async () => {
               if (!isCommit) {
@@ -181,22 +157,16 @@ function CharacterSettings() {
                   statList,
                 };
 
-                const { status }: any = await commit({ id: userId, statList });
+                setCharacterListState(newCharacterList);
+                const commitedAgent = newCharacterList.filter(
+                  (data) => data.isCommited
+                );
 
-                if (status === 201) {
-                  setCharacterListState(newCharacterList);
-                  const commitedAgent = newCharacterList.filter(
-                    (data) => data.isCommited
-                  );
-
-                  if (commitedAgent.length === 4) {
-                    navigate("/self-reliance-agent-vote/ending");
-                  } else {
-                    resetStatList();
-                    navigate("/self-reliance-agent-vote/selectCharcter");
-                  }
+                if (commitedAgent.length === 4) {
+                  navigate("/self-reliance-agent-vote/ending");
                 } else {
-                  alert("제출 실패! 김한송 요원에게 전달해주세요");
+                  resetStatList();
+                  navigate("/self-reliance-agent-vote/selectCharcter");
                 }
               }
             }}
